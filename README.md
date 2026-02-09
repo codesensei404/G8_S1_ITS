@@ -11,9 +11,15 @@ The Submission Components:
 2) Video Preparation - Dhruvi Chavda and Yagnik Trivedi
 3) Scribe Preparation - Manthangiri Gosai and Vruddhi Madam
 
-The below is the File Structure for the Github repository according to the given instructions.
 
-
+********************************************************************
+********************************************************************
+********************************************************************
+********************************************************************
+********************************************************************
+********************************************************************
+********************************************************************
+********************************************************************
 
 Milestone-02: Due Date 15-Feb-2026
 The Submission Components:
@@ -24,5 +30,114 @@ The Submission Components:
 
 The below is the File Structure for the Github repository according to the given instructions.
 
+********************************************************************
+********************************************************************
+********************************************************************
+********************************************************************
+********************************************************************
+********************************************************************
+********************************************************************
+********************************************************************
 
 
+The below is the File Structure for the Github repository according to the given instructions.
+
+
+
+
+
+```
+📦Intelligent-Transportation-System-Route-Optimization
+ ┣ 📂Lecture_Scribe
+ ┃ ┣ 📂S1_G8_ITS_L10_(S_CoT)
+ ┃ ┃ ┣ 📂Chat_Link
+ ┃ ┃ ┃ ┗ 📄S1_G8_Chat_Link_L10_(S_CoT)_AU2440099_Abdulwahab_Shaikh.txt
+ ┃ ┃ ┣ 📂Chat_PDF
+ ┃ ┃ ┃ ┗ 📄S1_G8_ChatPDF_L10_(S_CoT)_AU2440099_Abdulwahab_Shaikh.pdf
+ ┃ ┃ ┣ 📂Prompt
+ ┃ ┃ ┃ ┗ 📄S1_G8_Prompt_L10_(S_CoT)_AU2440099_Abdulwahab_Shaikh.txt
+ ┃ ┃ ┗ 📂Scribe
+ ┃ ┃ ┃ ┣ 📄S1_G8_L10_Scribe_(S_CoT)_AU2440099_Abdulwahab_Shaikh.pdf
+ ┃ ┃ ┃ ┗ 📄S1_G8_L10_Scribe_(S_CoT)_AU2440099_Abdulwahab_Shaikh.tex
+ ┃ ┣ 📂S1_G8_ITS_L14_(S_CoT)
+ ┃ ┃ ┣ 📂Chat_Link
+ ┃ ┃ ┃ ┗ 📄placeholder.txt
+ ┃ ┃ ┣ 📂Chat_PDF
+ ┃ ┃ ┃ ┗ 📄placeholder.txt
+ ┃ ┃ ┣ 📂Prompt
+ ┃ ┃ ┃ ┗ 📄placeholder.txt
+ ┃ ┃ ┗ 📂Scribe
+ ┃ ┃ ┃ ┗ 📄placeholder.txt
+ ┃ ┣ 📂S1_G8_ITS_L18_(S_CoT)
+ ┃ ┃ ┣ 📂Chat_Link
+ ┃ ┃ ┃ ┗ 📄placeholder.txt
+ ┃ ┃ ┣ 📂Chat_PDF
+ ┃ ┃ ┃ ┗ 📄placeholder.txt
+ ┃ ┃ ┣ 📂Prompt
+ ┃ ┃ ┃ ┗ 📄placeholder.txt
+ ┃ ┃ ┗ 📂Scribe
+ ┃ ┃ ┃ ┗ 📄placeholder.txt
+ ┃ ┣ 📂S1_G8_ITS_L22_(S_CoT)
+ ┃ ┃ ┣ 📂Chat_Link
+ ┃ ┃ ┃ ┗ 📄placeholder.txt
+ ┃ ┃ ┣ 📂Chat_PDF
+ ┃ ┃ ┃ ┗ 📄placeholder.txt
+ ┃ ┃ ┣ 📂Prompt
+ ┃ ┃ ┃ ┗ 📄placeholder.txt
+ ┃ ┃ ┗ 📂Scribe
+ ┃ ┃ ┃ ┗ 📄placeholder.txt
+ ┃ ┣ 📂S1_G8_ITS_L26_(S_CoT)
+ ┃ ┃ ┣ 📂Chat_Link
+ ┃ ┃ ┃ ┗ 📄placeholder.txt
+ ┃ ┃ ┣ 📂Chat_PDF
+ ┃ ┃ ┃ ┗ 📄placeholder.txt
+ ┃ ┃ ┣ 📂Prompt
+ ┃ ┃ ┃ ┗ 📄placeholder.txt
+ ┃ ┃ ┗ 📂Scribe
+ ┃ ┃ ┃ ┗ 📄placeholder.txt
+ ┃ ┗ 📂S1_G8_ITS_L6_(S_CoT)
+ ┃ ┃ ┣ 📂Chat_Link
+ ┃ ┃ ┃ ┣ 📄S1_G8_Chat_Link_L6_(S_CoT)_AU2440099_Abdulwahab_Shaikh.txt
+ ┃ ┃ ┃ ┣ 📄S1_G8_Chat_Link_L6_(S_CoT)_AU2440127_Yagnik-Trivedi.txt
+ ┃ ┃ ┃ ┣ 📄S1_G8_ITS_L6_ChatLink_(S_CoT)_AU2440137_Vruddhi_Madam.txt
+ ┃ ┃ ┃ ┗ 📄S1_G8_ITS_L6_ChatLink_(S_CoT)_AU2440236_Dhruvi_Chavda.txt
+ ┃ ┃ ┣ 📂Chat_PDF
+ ┃ ┃ ┃ ┣ 📄S1_G8_ChatPDF_L6_(S_CoT)_AU2440127_Yagnik-Trivedi.pdf
+ ┃ ┃ ┃ ┣ 📄S1_G8_ITS_L6_ChatPDF_(S_CoT)_AU2440137_Vruddhi_Madam.pdf
+ ┃ ┃ ┃ ┣ 📄S1_G8_L6_ChatPDF_(S_CoT)_AU2440099_Abdulwahab_Shaikh.pdf
+ ┃ ┃ ┃ ┗ 📄S1_G8_L6_ChatPDF_(S_CoT)_AU2440236_Dhruvi_Chavda.pdf
+ ┃ ┃ ┣ 📂Prompt
+ ┃ ┃ ┃ ┣ 📄S1_G8_ITS_L6_Prompt_(S_CoT)_AU2440137_Vruddhi_Madam.txt
+ ┃ ┃ ┃ ┣ 📄S1_G8_ITS_L6_Prompt_(S_CoT)_AU2440236_Dhruvi_Chavda.txt
+ ┃ ┃ ┃ ┣ 📄S1_G8_Prompt_L6_(S_CoT)_AU2440099_Abdulwahab_Shaikh.txt
+ ┃ ┃ ┃ ┗ 📄S1_G8_Prompt_L6_(S_CoT)_AU2440127_Yagnik-Trivedi.txt
+ ┃ ┃ ┗ 📂Scribe
+ ┃ ┃ ┃ ┣ 📄S1_G8_ITS_L6_Scribe_(S_CoT)_AU2440137_Vruddhi_Madam.pdf
+ ┃ ┃ ┃ ┣ 📄S1_G8_ITS_L6_Scribe_(S_CoT)_AU2440137_Vruddhi_Madam.tex
+ ┃ ┃ ┃ ┣ 📄S1_G8_ITS_L6_Scribe_(S_CoT)_AU2440236_Dhruvi_Chavda.tex
+ ┃ ┃ ┃ ┣ 📄S1_G8_ITS_L6_Scribe__(S_CoT)__AU2440236_Dhruvi_Chavda.pdf
+ ┃ ┃ ┃ ┣ 📄S1_G8_L6_Scribe(S_CoT)AU2440127_Yagnik_Trivedi.pdf
+ ┃ ┃ ┃ ┣ 📄S1_G8_L6_Scribe(S_CoT)AU2440127_Yagnik_Trivedi.tex
+ ┃ ┃ ┃ ┣ 📄S1_G8_L6_Scribe_(S_CoT)_AU2440099_Abdulwahab_Shaikh.pdf
+ ┃ ┃ ┃ ┗ 📄S1_G8_L6_Scribe_(S_CoT)_AU2440099_Abdulwahab_Shaikh.tex
+ ┣ 📂Project Milestone 01
+ ┃ ┣ 📂Concept Map
+ ┃ ┃ ┣ 📄Live_Concept_Map_Link
+ ┃ ┃ ┗ 📄Milestone-01_s1_g8_Its_Concept_Map.pdf
+ ┃ ┣ 📂PPT For Video
+ ┃ ┃ ┗ 📄S1_G8_ITS_ROUTE-OPTIMIZATION.pptx
+ ┃ ┣ 📂Scribe
+ ┃ ┃ ┗ 📄s1_g8_ITS_M1_Scribe.pdf
+ ┃ ┗ 📂Video Presentation
+ ┃ ┃ ┗ 📄drive_link_S1_G8_ITS
+ ┣ 📂Project Milestone 02
+ ┃ ┣ 📂Concept Map
+ ┃ ┃ ┗ 📄Live_Concept_Map_Link
+ ┃ ┣ 📂PPT For Video
+ ┃ ┃ ┗ 📄Placeholder.txt
+ ┃ ┣ 📂Scribe
+ ┃ ┃ ┗ 📄Placeholder.txt
+ ┃ ┗ 📂Video Presentation
+ ┃ ┃ ┗ 📄drive_link_S1_G8_ITS
+ ┗ 📄README.md
+```
