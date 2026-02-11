@@ -1,0 +1,372 @@
+\documentclass[11pt]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{setspace}
+
+\begin{document}
+
+\section*{CSE400 – Fundamentals of Probability in Computing}
+\textbf{Lecture 10: Randomized Min-Cut Algorithm}
+
+\section*{1. Min-Cut Problem}
+
+\subsection*{1.1 Why Use Min-Cut?}
+
+The min-cut algorithm is used in various applications to solve problems related to:
+
+\begin{itemize}
+\item Network connectivity
+\item Reliability
+\item Optimization
+\end{itemize}
+
+\textbf{Applications Mentioned in Slides}
+
+\textbf{Network Design}
+
+Min cut helps in improving the efficiency of communication.
+
+It helps in optimizing network flow.
+
+The algorithm is used in network design to find the minimum capacity cut.
+
+\textbf{Communication Networks}
+
+For understanding the vulnerability of the networks to failures, minimum cut can be useful.
+
+It helps building robust and fault-tolerant communication networks.
+
+\textbf{VLSI Design}
+
+In Very Large Scale Integration (VLSI) design, the algorithm is useful for partitioning circuits into smaller components.
+
+This leads to reduced interconnectivity complexity.
+
+Reference mentioned in slides:
+
+Section 1.5, Application: A Randomized Min-Cut Algorithm in Probability and Computing (2nd Edition).
+
+\section*{2. What is Min-Cut?}
+
+\subsection*{2.1 Definition: Cut-Set}
+
+A cut-set in a graph is:
+
+A set of edges whose removal breaks the graph into two or more connected components.
+
+\textbf{Step-by-Step Interpretation}
+
+Start with a connected graph.
+
+Remove a selected set of edges.
+
+If the graph becomes disconnected (two or more components), that set of edges is a cut-set.
+
+\subsection*{2.2 Definition: Minimum Cut}
+
+Given a graph
+\[
+G = (V,E)
+\]
+with
+\[
+n
+\]
+vertices,
+
+The minimum cut — or min-cut — problem is:
+
+To find a minimum cardinality cut-set in
+\[
+G
+\]
+
+\textbf{Step-by-Step Reasoning}
+
+Identify all possible cut-sets.
+
+Compute the number of edges (cardinality) in each cut-set.
+
+Select the cut-set with the smallest cardinality.
+
+That smallest cut-set is called the minimum cut.
+
+\subsection*{2.3 Sensitivity of Min-Cut Algorithms}
+
+Min-cut algorithms such as Karger’s algorithm:
+
+Are random.
+
+Can be sensitive to the initial choice of edges.
+
+If the algorithm happens to contract critical edges early in the process, it might find a smaller cut.
+
+This explains why different runs of the algorithm may produce different results.
+
+\section*{3. Edge Contraction (Main Operation)}
+
+The main operation in the algorithm is edge contraction.
+
+Edge contraction is:
+
+An operation that removes an edge from a graph while simultaneously merging the two vertices.
+
+\textbf{Contracting an Edge (u, v)}
+
+When contracting edge
+\[
+(u,v)
+\]
+
+Step 1: Merge vertices $u$ and $v$ into one vertex.
+
+Step 2: Eliminate all edges connecting $u$ and $v$.
+
+Step 3: Retain all other edges in the graph.
+
+\textbf{Properties After Contraction}
+
+The new graph may have parallel edges.
+
+The new graph has no self-loops.
+
+(The slides visually demonstrate merging and removal of self-loops.)
+
+\section*{4. Successful and Unsuccessful Min-Cut Runs}
+
+\subsection*{4.1 Successful Min-Cut Run}
+
+A successful min cut run refers to:
+
+The success in the outcome of an algorithm designed to find the minimum cut in a graph.
+
+From the slide illustration:
+
+Random edges are selected.
+
+Contractions are performed step-by-step.
+
+The final two supernodes correspond to the correct minimum cut.
+
+Thus, the algorithm correctly identifies the minimum cut in that execution.
+
+\subsection*{4.2 Unsuccessful Min-Cut Run}
+
+An unsuccessful min-cut run refers to:
+
+An iteration of a min-cut algorithm where the algorithm fails to correctly identify the minimum cut of a given graph.
+
+From the slide illustration:
+
+Critical edges are contracted early.
+
+The structure of the graph changes.
+
+The final cut obtained is not the true minimum cut.
+
+This demonstrates the probabilistic nature of the algorithm.
+
+\section*{5. Max-Flow Min-Cut Theorem}
+
+\subsection*{5.1 Statement of Theorem}
+
+The max-flow min-cut theorem states:
+
+“In a flow network, the maximum amount of flow passing from the source to the sink is equal to the total weight of the edges in a minimum cut.”
+
+\subsection*{5.2 Definitions Used in Theorem}
+
+Capacity of a cut
+
+= The sum of the capacity of the edges in the cut that are oriented from a vertex $\in X$ to a vertex $\in Y$.
+
+Minimum cut
+
+= The cut in the network that has the smallest possible capacity.
+
+Minimum cut capacity
+
+= The capacity of the minimum cut.
+
+Maximum flow
+
+= The largest possible flow from source S to sink T.
+
+(The slide includes a flow network diagram illustrating source S, sink T, capacities, and the cut partition.)
+
+\section*{6. Deterministic Min-Cut Algorithm}
+
+\subsection*{6.1 Stoer–Wagner Minimum Cut Algorithm}
+
+Let $s$ and $t$ be two vertices of a graph $G$.
+
+Let $G/\{s,t\}$ be the graph obtained by merging $s$ and $t$.
+
+Then a minimum cut of $G$ can be obtained by taking the smaller of:
+
+A minimum $s$–$t$ cut of $G$, and
+
+A minimum cut of $G/\{s,t\}$.
+
+\textbf{Justification (As Stated in Slides)}
+
+Case 1:
+
+There exists a minimum cut of $G$ that separates $s$ and $t$.
+
+Then a minimum $s$–$t$ cut of $G$ is a minimum cut of $G$.
+
+Case 2:
+
+There is no minimum cut that separates $s$ and $t$.
+
+Then a minimum cut of $G/\{s,t\}$ gives the required minimum cut.
+
+Thus, one of the two cases must produce the global minimum cut.
+
+\subsection*{6.2 Pseudocode}
+
+\begin{algorithm}
+\caption{Algorithm 1: MinimumCutPhase(G, a)}
+\begin{algorithmic}
+\STATE $A \leftarrow \{a\}$
+\WHILE{$A \neq V$}
+\STATE add to $A$ the most tightly connected vertex;
+\ENDWHILE
+\STATE return the cut weight as the “cut of the phase”;
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+\caption{Algorithm 2: MinimumCut(G)}
+\begin{algorithmic}
+\WHILE{$|V| \ge 1$}
+\STATE choose any $a$ from $V$;
+\STATE MinimumCutPhase(G, a);
+\STATE if the cut-of-the-phase is lighter than the current minimum cut then
+\STATE store the cut-of-the-phase as the current minimum cut;
+\STATE shrink $G$ by merging the two vertices added last;
+\ENDWHILE
+\STATE return the minimum cut;
+\end{algorithmic}
+\end{algorithm}
+
+\subsection*{6.3 Deterministic Properties}
+
+It always guarantees an exact minimum cut.
+
+It may have higher time complexity for large graphs.
+
+Time complexity of Stoer-Wagner algorithm:
+
+\[
+O(V \cdot E + V^2 \log V)
+\]
+
+where V is the number of vertices and E is the number of edges.
+
+\section*{7. Randomized Min-Cut Algorithm}
+
+\subsection*{7.1 Why Randomized Algorithm?}
+
+Randomized algorithms:
+
+Provide a probabilistic guarantee of success.
+
+Provide a more accurate estimate of the minimum cut with fewer iterations.
+
+Reasons listed in slides:
+
+Efficiency
+
+Parallelization
+
+Approximation Guarantees
+
+Avoidance of Worst-Case Instances
+
+Heuristic Nature
+
+Robustness
+
+\section*{8. Karger’s Randomized Algorithm}
+
+Procedure illustrated in slides:
+
+Step 1: Pick a random edge.
+
+Step 2: Remove it.
+
+Step 3: Fuse its two vertices into one.
+
+Step 4: Repeat until only two supernodes remain.
+
+Step 5: Output the cut defined by the remaining two supernodes.
+
+The example shown in slides demonstrates a run where random edges are picked in a way that the output cut is not minimal. The output cut differs from the actual minimum cut.
+
+This illustrates the probabilistic behavior of the algorithm.
+
+\section*{9. Recursive Randomized Min-Cut}
+
+\begin{algorithm}
+\caption{Algorithm 3: Recursive-Randomized-Min-Cut(G, $\alpha$)}
+\begin{algorithmic}
+\STATE Input:
+\STATE An undirected multigraph G with n vertices, and an integer constant $\alpha > 0$.
+\STATE Output:
+\STATE A cut C of G.
+\IF{$n \le 3$}
+\STATE $C \leftarrow$ a min-cut of G found using brute force (exhaustive) search;
+\ELSE
+\FOR{$i \leftarrow 1$ to $\alpha$}
+\STATE $G' \leftarrow$ multigraph obtained by applying $n - n/\sqrt{\alpha}$ random contraction steps on G;
+\STATE $C' \leftarrow$ Recursive-Randomized-Min-Cut($G', \alpha$);
+\STATE if $i = 1$ or $|C'| < |C|$ then
+\STATE $C \leftarrow C'$;
+\ENDFOR
+\ENDIF
+\STATE return C;
+\end{algorithmic}
+\end{algorithm}
+
+\section*{10. Comparison: Deterministic vs Randomized Min-Cut}
+
+Any specific problem is responsible for deciding the approach.
+
+\textbf{Deterministic Min Cut}
+
+Always guarantees an exact minimum cut.
+
+May have higher time complexity for large graphs.
+
+Time complexity:
+
+\[
+O(V \cdot E + V^2 \log V)
+\]
+
+\textbf{Randomized Min Cut}
+
+Provides an approximate minimum cut with high probability.
+
+Karger’s algorithm has time complexity:
+
+\[
+O(V^2)
+\]
+
+where V is the number of vertices.
+
+\section*{11. Theorem for Min-Cut Set}
+
+The algorithm outputs a min-cut set with probability at least:
+
+\[
+\frac{2}{n(n-1)}
+\]
+
+\end{document}
