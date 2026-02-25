@@ -1,0 +1,608 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{setspace}
+
+\setstretch{1.1}
+
+\begin{document}
+
+\begin{center}
+\textbf{\Large CSE 400 – Fundamentals of Probability in Computing}
+
+\vspace{0.5cm}
+
+\textbf{\large Lecture Scribe: Conceptual Foundations for Tutorial–2}
+\end{center}
+
+\vspace{0.5cm}
+
+This lecture scribe explains the theoretical concepts, probability distributions, properties, and formulae required to solve each problem in Tutorial–2. The focus is on identifying the mathematical models and principles necessary for solving the problems, without performing full computations.
+
+\vspace{0.5cm}
+
+\hrule
+\vspace{0.5cm}
+
+\section*{Question 1: Random Point on a Line Segment}
+
+\subsection*{Modeling Using Continuous Uniform Distribution}
+
+When a point is chosen at random on a line segment of length L, its location is modeled as a continuous uniform random variable.
+
+Let
+
+\[
+X \sim \text{Uniform}(0, L)
+\]
+
+Probability Density Function (PDF):
+
+\[
+f_X(x) = \frac{1}{L}, \quad 0 < x < L
+\]
+
+Cumulative Distribution Function (CDF):
+
+\[
+F_X(x) = \frac{x}{L}, \quad 0 < x < L
+\]
+
+\subsection*{Segment Partition}
+
+The chosen point divides the original segment into two parts:
+
+Left segment length = X
+
+Right segment length = L − X
+
+Define:
+
+Shorter segment = min(X, L − X)
+
+Longer segment = max(X, L − X)
+
+\subsection*{Concepts Required}
+
+• Uniform distribution implies constant density over the interval
+
+• Probability over an interval equals ratio of interval lengths
+
+• Symmetry about midpoint L/2
+
+• Case-wise analysis:
+
+Case 1: X ≤ L/2
+
+Case 2: X ≥ L/2
+
+• Converting ratio condition into inequality involving X
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+\section*{Question 2: Classification Using Normal Distributions}
+
+\subsection*{Conditional Distributions}
+
+White region reading:
+
+\[
+X \mid W \sim \text{Normal}(4, 4)
+\]
+
+Black region reading:
+
+\[
+X \mid B \sim \text{Normal}(6, 9)
+\]
+
+Prior probabilities:
+
+\[
+P(B) = \alpha
+\]
+
+\[
+P(W) = 1 − \alpha
+\]
+
+\subsection*{Normal Distribution Density Function}
+
+\[
+f(x) = \frac{1}{\sqrt{2\pi\sigma^2}} \exp\left( −\frac{(x − μ)^2}{2\sigma^2} \right)
+\]
+
+\subsection*{Bayesian Classification}
+
+Posterior probability formula:
+
+\[
+P(B \mid x)
+=
+\frac{ f_B(x) P(B) }
+{ f_B(x)P(B) + f_W(x)P(W) }
+\]
+
+\[
+P(W \mid x)
+=
+\frac{ f_W(x) P(W) }
+{ f_B(x)P(B) + f_W(x)P(W) }
+\]
+
+\subsection*{Equal Probability of Error Condition}
+
+Equal classification error implies:
+
+\[
+P(B \mid x) = P(W \mid x)
+\]
+
+Which leads to:
+
+\[
+f_B(x) P(B) = f_W(x) P(W)
+\]
+
+Concepts required:
+
+• Conditional probability
+
+• Bayes' theorem
+
+• Normal density substitution
+
+• Solving equation involving exponential functions
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+\section*{Question 3: Minimizing Expected Absolute Distance}
+
+Objective function:
+
+Minimize
+
+\[
+E[ |X − a| ]
+\]
+
+This represents expected absolute deviation.
+
+\subsection*{Uniform Distribution Case}
+
+\[
+X \sim \text{Uniform}(0, A)
+\]
+
+PDF:
+
+\[
+f_X(x) = \frac{1}{A}
+\]
+
+Expected value expression:
+
+\[
+E[ |X − a| ] = \int |x − a| f_X(x) dx
+\]
+
+Key concept:
+
+Expected absolute deviation is minimized at the median.
+
+Median satisfies:
+
+\[
+P(X ≤ m) = \frac{1}{2}
+\]
+
+Uniform median:
+
+\[
+m = \frac{A}{2}
+\]
+
+\subsection*{Exponential Distribution Case}
+
+\[
+X \sim \text{Exponential}(\lambda)
+\]
+
+PDF:
+
+\[
+f_X(x) = \lambda e^{−\lambda x}, \quad x > 0
+\]
+
+CDF:
+
+\[
+F_X(x) = 1 − e^{−\lambda x}
+\]
+
+Median condition:
+
+\[
+F(m) = \frac{1}{2}
+\]
+
+Concept required:
+
+Median minimizes expected absolute deviation.
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+\section*{Question 4: Mixture of Exponential Distributions}
+
+Each battery type lifetime follows exponential distribution:
+
+\[
+X_i \sim \text{Exponential}(\lambda_i)
+\]
+
+Selection probability:
+
+\[
+P(Type i) = p_i
+\]
+
+\subsection*{Survival Function}
+
+\[
+P(X > t) = e^{−\lambda t}
+\]
+
+\subsection*{Law of Total Probability}
+
+Overall survival probability:
+
+\[
+P(X > t)
+=
+p_1 e^{−\lambda_1 t}
++
+p_2 e^{−\lambda_2 t}
+\]
+
+\subsection*{Conditional Probability Definition}
+
+\[
+P(X > t + s \mid X > t)
+=
+\frac{P(X > t + s)}{P(X > t)}
+\]
+
+Concept required:
+
+• Law of total probability
+
+• Conditional probability
+
+• Survival functions
+
+• Mixture distributions
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+\section*{Question 5: Conditional Distribution of Poisson Random Variables}
+
+Given independent random variables:
+
+\[
+X \sim \text{Poisson}(\lambda_1)
+\]
+
+\[
+Y \sim \text{Poisson}(\lambda_2)
+\]
+
+Poisson PMF:
+
+\[
+P(X = k)
+=
+\frac{e^{−\lambda} \lambda^k}{k!}
+\]
+
+\subsection*{Sum of Independent Poisson Variables}
+
+\[
+X + Y \sim \text{Poisson}(\lambda_1 + \lambda_2)
+\]
+
+\subsection*{Conditional Distribution Result}
+
+Conditional distribution follows binomial distribution.
+
+Binomial PMF:
+
+\[
+P(X = k \mid X + Y = n)
+\]
+
+\[
+=
+C(n, k)
+p^k
+(1 − p)^{(n − k)}
+\]
+
+Where
+
+\[
+p
+=
+\frac{\lambda_1}{\lambda_1 + \lambda_2}
+\]
+
+Concepts required:
+
+• Poisson distribution
+
+• Independence
+
+• Conditional probability
+
+• Relationship between Poisson and binomial distributions
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+\section*{Question 6: Transformation of Random Variables}
+
+Given:
+
+\[
+X \sim \text{Uniform}[−2, 2]
+\]
+
+Transformation:
+
+\[
+Y = g(X)
+\]
+
+\subsection*{CDF Method}
+
+\[
+F_Y(y)
+=
+P(Y ≤ y)
+\]
+
+\[
+=
+P(g(X) ≤ y)
+\]
+
+\subsection*{PDF Transformation Formula}
+
+\[
+f_Y(y)
+=
+f_X(x)
+\left| \frac{dx}{dy} \right|
+\]
+
+Concepts required:
+
+• Transformation of continuous random variables
+
+• Inverse transformation
+
+• Differentiation of CDF
+
+• Determining range of transformed variable
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+\section*{Question 7: Stock Price Model}
+
+Each step:
+
+Multiply by u with probability p
+
+Multiply by d with probability 1 − p
+
+Independent across steps.
+
+\subsection*{Binomial Distribution Model}
+
+Number of upward movements:
+
+\[
+N \sim \text{Binomial}(n, p)
+\]
+
+Mean:
+
+\[
+E[N] = np
+\]
+
+Variance:
+
+\[
+Var(N) = np(1 − p)
+\]
+
+\subsection*{Final Price Expression}
+
+\[
+S = s u^N d^{(n − N)}
+\]
+
+Concept required:
+
+Logarithmic transformation simplifies multiplicative expressions.
+
+\subsection*{Normal Approximation}
+
+For large n:
+
+\[
+N \approx \text{Normal}(np, np(1 − p))
+\]
+
+Standardization:
+
+\[
+Z
+=
+\frac{N − np}{\sqrt{np(1 − p)}}
+\]
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+\section*{Question 8: Exponential Distribution and Memoryless Property}
+
+\[
+X \sim \text{Exponential}(\lambda)
+\]
+
+Survival function:
+
+\[
+P(X > t) = e^{−\lambda t}
+\]
+
+Memoryless property:
+
+\[
+P(X > t + s \mid X > t)
+=
+P(X > s)
+\]
+
+Concepts required:
+
+• Exponential distribution
+
+• Conditional probability
+
+• Memoryless property
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+\section*{Question 9: Distribution of Z = √(X² + Y²)}
+
+Joint density for independent variables:
+
+\[
+f_{X,Y}(x,y)
+=
+f_X(x) f_Y(y)
+\]
+
+Transformation to polar coordinates:
+
+\[
+x = r \cos\theta
+\]
+
+\[
+y = r \sin\theta
+\]
+
+Jacobian determinant:
+
+\[
+|J| = r
+\]
+
+Concept required:
+
+Use Jacobian transformation method.
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+\section*{Question 10: Distribution of Maximum}
+
+Define maximum:
+
+\[
+M_n
+=
+\max(X_1, X_2, ..., X_n)
+\]
+
+CDF of maximum:
+
+\[
+F_{M_n}(x)
+=
+[F(x)]^n
+\]
+
+Relationship:
+
+\[
+M_{n+1}
+=
+\max(M_n, X_{n+1})
+\]
+
+Concept required:
+
+• Order statistics
+
+• Independence
+
+• CDF properties
+
+\vspace{0.5cm}
+\hrule
+\vspace{0.5cm}
+
+\section*{Summary of Core Concepts}
+
+This tutorial requires understanding of:
+
+• Uniform distribution
+
+• Normal distribution
+
+• Bayes' theorem
+
+• Exponential distribution
+
+• Memoryless property
+
+• Poisson distribution
+
+• Binomial distribution
+
+• Normal approximation
+
+• Transformation of random variables
+
+• Jacobian method
+
+• Conditional probability
+
+• Law of total probability
+
+• Order statistics
+
+These concepts form the theoretical foundation required to solve all problems in this tutorial.
+
+\end{document}
