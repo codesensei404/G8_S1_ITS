@@ -1,4 +1,4 @@
-# G8_S1_ITS
+# G8_S1_ITS 🚗 🚗
 We are the group-08 members of CSE400: Fundamentals of Probability Section-01
 
 
