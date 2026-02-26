@@ -47,27 +47,52 @@ The below is the File Structure for the Github repository according to the given
 
 
 ```
-📦Intelligent-Transportation-System-Route-Optimization
+📦G8_S1_ITS
+ ┣ 📂Base Paper
+ ┃ ┗ 📄SOTA.pdf
+ ┣ 📂Code
+ ┃ ┗ 📄code.txt
  ┣ 📂Lecture_Scribe
  ┃ ┣ 📂S1_G8_ITS_L10_(S_CoT)
  ┃ ┃ ┣ 📂Chat_Link
- ┃ ┃ ┃ ┗ 📄S1_G8_Chat_Link_L10_(S_CoT)_AU2440099_Abdulwahab_Shaikh.txt
+ ┃ ┃ ┃ ┣ 📄S1_G8_Chat_Link_L10_(S_CoT)_AU2440099_Abdulwahab_Shaikh.txt
+ ┃ ┃ ┃ ┣ 📄S1_G8_Chat_Link_L10_(S_CoT)_AU2440127_Yagnik-Trivedi.txt
+ ┃ ┃ ┃ ┣ 📄S1_G8_ITS_L10_ChatLink_(S_CoT)_AU2440137_Vruddhi_Madam.txt
+ ┃ ┃ ┃ ┗ 📄S1_G8_L10_ChatLink_(S_CoT)_AU2440236_Dhruvi_Chavda.txt
  ┃ ┃ ┣ 📂Chat_PDF
- ┃ ┃ ┃ ┗ 📄S1_G8_ChatPDF_L10_(S_CoT)_AU2440099_Abdulwahab_Shaikh.pdf
+ ┃ ┃ ┃ ┣ 📄S1_G8_ChatPDF_L10_(S_CoT)_AU2440099_Abdulwahab_Shaikh.pdf
+ ┃ ┃ ┃ ┣ 📄S1_G8_ChatPDF_L10_(S_CoT)_AU2440127_Yagnik-Trivedi.pdf
+ ┃ ┃ ┃ ┣ 📄S1_G8_ITS_L10_ChatPDF_(S_CoT)_AU2440137_Vruddhi_Madam.pdf
+ ┃ ┃ ┃ ┗ 📄S1_G8_L10_ChatPDF_(S_CoT)_AU2440236_Dhruvi_Chavda.pdf
  ┃ ┃ ┣ 📂Prompt
- ┃ ┃ ┃ ┗ 📄S1_G8_Prompt_L10_(S_CoT)_AU2440099_Abdulwahab_Shaikh.txt
+ ┃ ┃ ┃ ┣ 📄S1_G8_ITS_L10_Prompt_(S_CoT)_AU2440137_Vruddhi_Madam.txt
+ ┃ ┃ ┃ ┣ 📄S1_G8_L10_Prompt_(S_CoT)_AU2440236_Dhruvi_Chavda.txt
+ ┃ ┃ ┃ ┣ 📄S1_G8_Prompt_L10_(S_CoT)_AU2440099_Abdulwahab_Shaikh.txt
+ ┃ ┃ ┃ ┗ 📄S1_G8_Prompt_L10_(S_CoT)_AU2440127_Yagnik-Trivedi.txt
  ┃ ┃ ┗ 📂Scribe
+ ┃ ┃ ┃ ┣ 📄S1_G8_ITS_L10_Scribe_(S_CoT)_AU2440137_Vruddhi_Madam.pdf
+ ┃ ┃ ┃ ┣ 📄S1_G8_ITS_L10_Scribe_(S_CoT)_AU2440137_Vruddhi_Madam.tex
  ┃ ┃ ┃ ┣ 📄S1_G8_L10_Scribe_(S_CoT)_AU2440099_Abdulwahab_Shaikh.pdf
- ┃ ┃ ┃ ┗ 📄S1_G8_L10_Scribe_(S_CoT)_AU2440099_Abdulwahab_Shaikh.tex
+ ┃ ┃ ┃ ┣ 📄S1_G8_L10_Scribe_(S_CoT)_AU2440099_Abdulwahab_Shaikh.tex
+ ┃ ┃ ┃ ┣ 📄S1_G8_L10_Scribe_(S_CoT)_AU2440127_Yagnik_Trivedi.pdf
+ ┃ ┃ ┃ ┣ 📄S1_G8_L10_Scribe_(S_CoT)_AU2440127_Yagnik_Trivedi.tex
+ ┃ ┃ ┃ ┣ 📄S1_G8_L10_Scribe_(S_CoT)_AU2440236_Dhruvi_Chavda.pdf
+ ┃ ┃ ┃ ┗ 📄S1_G8_L10_Scribe_(S_CoT)_AU2440236_Dhruvi_Chavda.tex
  ┃ ┣ 📂S1_G8_ITS_L14_(S_CoT)
  ┃ ┃ ┣ 📂Chat_Link
- ┃ ┃ ┃ ┗ 📄placeholder.txt
+ ┃ ┃ ┃ ┣ 📄S1_G8_Chat_Link_L14_(S_CoT)_AU2440099_Abdulwahab_Shaikh.txt
+ ┃ ┃ ┃ ┗ 📄S1_G8_Chat_Link_L14_(S_CoT)_AU2440127_Yagnik-Trivedi.txt
  ┃ ┃ ┣ 📂Chat_PDF
- ┃ ┃ ┃ ┗ 📄placeholder.txt
+ ┃ ┃ ┃ ┣ 📄S1_G8_ChatPDF_L14_(S_CoT)_AU2440099_Abdulwahab_Shaikh.pdf
+ ┃ ┃ ┃ ┗ 📄S1_G8_ChatPDF_L14_(S_CoT)_AU2440127_Yagnik-Trivedi.pdf
  ┃ ┃ ┣ 📂Prompt
- ┃ ┃ ┃ ┗ 📄placeholder.txt
+ ┃ ┃ ┃ ┣ 📄S1_G8_Prompt_L14_(S_CoT)_AU2440099_Abdulwahab_Shaikh.txt
+ ┃ ┃ ┃ ┗ 📄S1_G8_Prompt_L14_(S_CoT)_AU2440127_Yagnik-Trivedi.txt
  ┃ ┃ ┗ 📂Scribe
- ┃ ┃ ┃ ┗ 📄placeholder.txt
+ ┃ ┃ ┃ ┣ 📄S1_G8_L14_Scribe_S_CoT_AU2440127_Yagnik_Trivedi.pdf
+ ┃ ┃ ┃ ┣ 📄S1_G8_L14_Scribe_S_CoT_AU2440127_Yagnik_Trivedi.tex
+ ┃ ┃ ┃ ┣ 📄S1_G8_L14_Scribe__S_CoT__AU2440099_Abdulwahab_Shaikh.pdf
+ ┃ ┃ ┃ ┗ 📄S1_G8_L14_Scribe__S_CoT__AU2440099_Abdulwahab_Shaikh.tex
  ┃ ┣ 📂S1_G8_ITS_L18_(S_CoT)
  ┃ ┃ ┣ 📂Chat_Link
  ┃ ┃ ┃ ┗ 📄placeholder.txt
@@ -132,12 +157,13 @@ The below is the File Structure for the Github repository according to the given
  ┃ ┃ ┗ 📄drive_link_S1_G8_ITS
  ┣ 📂Project Milestone 02
  ┃ ┣ 📂Concept Map
- ┃ ┃ ┗ 📄Live_Concept_Map_Link
+ ┃ ┃ ┣ 📄Live_Concept_Map_Link
+ ┃ ┃ ┗ 📄Milestone-02_s1_g8_Its_Concept_Map.pdf
  ┃ ┣ 📂PPT For Video
- ┃ ┃ ┗ 📄Placeholder.txt
+ ┃ ┃ ┗ 📄S1_G8_ITS_SOTA_M2_PPT.pptx
  ┃ ┣ 📂Scribe
- ┃ ┃ ┗ 📄Placeholder.txt
+ ┃ ┃ ┗ 📄S1_G8_ITS_M2_Scribe.pdf
  ┃ ┗ 📂Video Presentation
- ┃ ┃ ┗ 📄drive_link_S1_G8_ITS
+ ┃ ┃ ┗ 📄S1_G8_ITS_SOTA_M2_Video_Link_Google_Drive.txt
  ┗ 📄README.md
 ```
