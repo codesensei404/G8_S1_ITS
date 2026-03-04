@@ -1,0 +1,573 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\geometry{margin=1in}
+\begin{document}
+
+\title{CSE 400: Fundamentals of Probability in Computing\\
+Tutorial 2 – Lecture Scribe (Step-by-Step)}
+\date{}
+\maketitle
+
+\section*{Q1. Random Point on a Line Segment}
+
+\textbf{Problem Interpretation}
+
+A point is chosen uniformly at random on a line segment of length $L$.
+
+Let:
+
+The point be at distance $x$ from one end.
+
+Then $0 < x < L$.
+
+The two segments formed are:
+
+$x$
+
+$L - x$
+
+The ratio of the shorter to the longer segment is:
+
+\[
+R = \frac{\min(x, L-x)}{\max(x, L-x)}
+\]
+
+We must find:
+
+\[
+P(R < 1/4)
+\]
+
+\textbf{Logical Case Division}
+
+We divide based on midpoint $L/2$.
+
+\textbf{Case 1:} $x \le L/2$
+
+Shorter segment = $x$  
+Longer segment = $L - x$
+
+\[
+\frac{x}{L-x} < \frac{1}{4}
+\]
+
+Multiply both sides:
+
+\[
+4x < L - x
+\]
+
+\[
+5x < L
+\]
+
+\[
+x < \frac{L}{5}
+\]
+
+\textbf{Case 2:} $x > L/2$
+
+Shorter segment = $L - x$  
+Longer segment = $x$
+
+\[
+\frac{L-x}{x} < \frac{1}{4}
+\]
+
+Multiply:
+
+\[
+4L - 4x < x
+\]
+
+\[
+5x > 4L
+\]
+
+\[
+x > \frac{4L}{5}
+\]
+
+\textbf{Valid Region}
+
+\[
+(0, L/5) \cup (4L/5, L)
+\]
+
+Total length:
+
+\[
+(L/5 - 0) + (L - 4L/5) = L/5 + L/5 = 2L/5
+\]
+
+Since uniform over length $L$:
+
+\[
+P = \frac{2L/5}{L} = \frac{2}{5}
+\]
+
+\section*{Q2. Bayes Classification with Normal Densities}
+
+\textbf{Given}
+
+White region:
+
+\[
+X|W \sim N(4,4), \sigma_1 = 2
+\]
+
+Black region:
+
+\[
+X|B \sim N(6,9), \sigma_2 = 3
+\]
+
+Prior probabilities:
+
+\[
+P(B) = \alpha, \quad P(W) = 1-\alpha
+\]
+
+Observed:
+
+\[
+X = 5
+\]
+
+We want equal posterior error:
+
+\[
+P(B|X=5) = P(W|X=5) = 1/2
+\]
+
+\textbf{Bayes Formula}
+
+\[
+P(B|X=5) = \frac{\alpha f(5|B)}{\alpha f(5|B) + (1-\alpha)f(5|W)}
+\]
+
+Set equal to $1/2$.
+
+\textbf{Normal Density Formula}
+
+\[
+f(x) = \frac{1}{\sigma \sqrt{2\pi}} e^{-\frac{(x-\mu)^2}{2\sigma^2}}
+\]
+
+Compute densities:
+
+\[
+f(5|B) = \frac{1}{3\sqrt{2\pi}} e^{-1/18}
+\]
+
+\[
+f(5|W) = \frac{1}{2\sqrt{2\pi}} e^{-1/8}
+\]
+
+Substitute:
+
+\[
+\frac{\alpha e^{-1/18}/(3\sqrt{2\pi})}
+{\alpha e^{-1/18}/(3\sqrt{2\pi}) + (1-\alpha)e^{-1/8}/(2\sqrt{2\pi})}
+= \frac{1}{2}
+\]
+
+Simplifies to:
+
+\[
+\frac{3\alpha}{3\alpha + 2(1-\alpha)e^{-5/72}} = \frac{1}{2}
+\]
+
+Solve:
+
+\[
+6\alpha = 3\alpha + 2(1-\alpha)(0.93)
+\]
+
+\[
+3\alpha = 1.86 - 1.86\alpha
+\]
+
+\[
+4.86\alpha = 1.86
+\]
+
+\[
+\alpha \approx 0.3827
+\]
+
+\section*{Q3. Fire Station Location}
+
+\textbf{(a) Uniform(0, A)}
+
+\[
+X \sim Uniform(0,A)
+\]
+
+\[
+f_X(x) = \frac{1}{A}
+\]
+
+Minimize:
+
+\[
+E[|X-a|]
+\]
+
+Split integral:
+
+\[
+\int_0^a (a-x)\frac{1}{A}dx + \int_a^A (x-a)\frac{1}{A}dx
+\]
+
+Differentiate:
+
+\[
+\frac{d}{da}\left(\frac{2a^2 - 2aA + A^2}{2A}\right)
+= \frac{1}{2A}(4a - 2A)
+\]
+
+Set zero:
+
+\[
+4a = 2A
+\]
+
+\[
+a = \frac{A}{2}
+\]
+
+Station at midpoint.
+
+\textbf{(b) Exponential($\lambda$)}
+
+\[
+f_X(x) = \lambda e^{-\lambda x}
+\]
+
+Differentiate expectation:
+
+\[
+\frac{d}{da}E[|X-a|] = 1 - 2e^{-\lambda a}
+\]
+
+Set zero:
+
+\[
+2e^{-\lambda a} = 1
+\]
+
+\[
+e^{-\lambda a} = 1/2
+\]
+
+\[
+-\lambda a = \ln(1/2) = -\ln 2
+\]
+
+\[
+a = \frac{\ln 2}{\lambda}
+\]
+
+\section*{Q4. Mixture of Exponentials}
+
+Two battery types:
+
+\[
+P(T=i) = p_i
+\]
+
+\[
+P(X>t) = p_1 e^{-\lambda_1 t} + p_2 e^{-\lambda_2 t}
+\]
+
+Similarly:
+
+\[
+P(X>t+s) = p_1 e^{-\lambda_1 (t+s)} + p_2 e^{-\lambda_2 (t+s)}
+\]
+
+Conditional probability:
+
+\[
+P(X>t+s|X>t)
+=
+\frac{p_1 e^{-\lambda_1 (t+s)} + p_2 e^{-\lambda_2 (t+s)}}
+{p_1 e^{-\lambda_1 t} + p_2 e^{-\lambda_2 t}}
+\]
+
+\section*{Q5. Conditional Poisson}
+
+\[
+X \sim Poisson(\lambda_1)
+\]
+
+\[
+Y \sim Poisson(\lambda_2)
+\]
+
+Independent.
+
+Find:
+
+\[
+P(X=k|X+Y=n)
+\]
+
+Step 1:
+
+\[
+P(X=k, Y=n-k) = P(X=k)P(Y=n-k)
+\]
+
+Substitute Poisson PMF:
+
+\[
+= \frac{e^{-\lambda_1}\lambda_1^k}{k!}
+\cdot
+\frac{e^{-\lambda_2}\lambda_2^{n-k}}{(n-k)!}
+\]
+
+Denominator:
+
+\[
+P(X+Y=n)
+=
+\frac{e^{-(\lambda_1+\lambda_2)}(\lambda_1+\lambda_2)^n}{n!}
+\]
+
+Final Simplified Form:
+
+\[
+P(X=k|X+Y=n)
+=
+\binom{n}{k}
+\left(\frac{\lambda_1}{\lambda_1+\lambda_2}\right)^k
+\left(\frac{\lambda_2}{\lambda_1+\lambda_2}\right)^{n-k}
+\]
+
+Binomial structure appears.
+
+\section*{Q6. Transformation of Random Variable}
+
+\[
+X \sim Uniform[-2,2]
+\]
+
+\[
+f_X(x) = \frac{1}{4}
+\]
+
+Piecewise function:
+
+$x$ for $[-2,-1]$
+
+$0$ for $(-1,1)$
+
+$x$ for $[1,2]$
+
+CDF
+
+Compute piecewise:
+
+$y<-2$: 0
+
+$-2 \le y < -1$: $(y+2)/4$
+
+$-1 \le y < 0$: $1/4$
+
+At $y=0$: jump of $1/2$
+
+\[
+F_Y(0) = 1/4 + 1/2 = 3/4
+\]
+
+$0<y<1$: $3/4$
+
+$1 \le y \le 2$: $(y+2)/4$
+
+$y>2$: 1
+
+PDF
+
+\[
+f_Y(y) = 1/4
+\]
+for $(-2,-1)$ and $(1,2)$
+
+Point mass:
+
+\[
+P(Y=0) = 1/2
+\]
+
+\section*{Q7. Stock Model}
+
+\[
+S_{1000} = S_0 u^k d^{1000-k}
+\]
+
+Require:
+
+\[
+u^k d^{1000-k} \ge 1.30
+\]
+
+Take logs:
+
+\[
+k \ln u + (1000-k)\ln d \ge \ln(1.30)
+\]
+
+Solve:
+
+\[
+k \ge
+\frac{\ln(1.30) - 1000\ln d}
+{\ln u - \ln d}
+\]
+
+Substitute values:
+
+\[
+k \ge 469.4
+\]
+
+Thus:
+
+\[
+k \ge 470
+\]
+
+Since:
+
+\[
+k \sim Binomial(1000,0.52)
+\]
+
+Probability:
+
+\[
+\sum_{k=470}^{1000}
+\binom{1000}{k}
+(0.52)^k
+(0.48)^{1000-k}
+\]
+
+\section*{Q8. Exponential Distribution}
+
+\[
+X \sim Exponential(1/2)
+\]
+
+PDF:
+
+\[
+f(x) = \frac{1}{2} e^{-x/2}
+\]
+
+(a)
+
+\[
+P(X>2) = e^{-1} \approx 0.3679
+\]
+
+(b)
+
+\[
+P(X \ge 10 | X>9)
+=
+\frac{e^{-5}}{e^{-9/2}}
+=
+e^{-1/2}
+\]
+
+\section*{Q9. Distribution of $Z = X^2 + Y^2$}
+
+\[
+F_Z(z) = P(X^2 + Y^2 \le z^2)
+\]
+
+Region:
+
+\[
+x^2 + y^2 \le z^2
+\]
+
+\[
+F_Z(z)
+=
+\int_{-z}^{z}
+\int_{-\sqrt{z^2-x^2}}^{\sqrt{z^2-x^2}}
+f_X(x)f_Y(y)
+\, dy \, dx
+\]
+
+Differentiate using Leibniz rule:
+
+\[
+\frac{d}{dz}\sqrt{z^2 - x^2}
+=
+\frac{z}{\sqrt{z^2-x^2}}
+\]
+
+Final PDF:
+
+\[
+f_Z(z)
+=
+z
+\int_{-z}^{z}
+f_X(x)
+\frac{
+f_Y(\sqrt{z^2-x^2}) + f_Y(-\sqrt{z^2-x^2})
+}
+{\sqrt{z^2-x^2}}
+dx
+\]
+
+\section*{Q10. Joint Distribution of $M_n, M_{n+1}$}
+
+\[
+M_n = \max(X_1,\dots,X_n)
+\]
+
+\[
+M_{n+1} = \max(M_n, X_{n+1})
+\]
+
+CDF of $M_n$
+
+\[
+P(M_n \le x) = F(x)^n
+\]
+
+Case 1: $x \le y$
+
+\[
+P(M_n \le x, M_{n+1} \le y)
+=
+F(x)^n F(y)
+\]
+
+Case 2: $x > y$
+
+\[
+P(M_n \le x, M_{n+1} \le y)
+=
+F(y)^{n+1}
+\]
+
+Final Joint CDF:
+
+\[
+P(M_n \le x, M_{n+1} \le y)
+=
+\begin{cases}
+F(x)^n F(y), & x \le y \\
+F(y)^{n+1}, & x > y
+\end{cases}
+\]
+
+\end{document}
