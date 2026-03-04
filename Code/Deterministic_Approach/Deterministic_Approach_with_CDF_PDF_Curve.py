@@ -2,6 +2,7 @@ import numpy as np
 import heapq
 import json
 import sys
+import matplotlib.pyplot as plt
 
 class Edge:
     def __init__(self, to_node, pmf):
@@ -119,6 +120,30 @@ def route_with_waypoints(graph, route_sequence):
         
     return full_path_nodes, full_path_edges, total_expected_cost
 
+def plot_pdf_cdf(pmf):
+    """
+    Plots PDF and CDF of the final arrival time distribution.
+    """
+    times = np.arange(len(pmf))
+    cdf = np.cumsum(pmf)
+
+    # ---- PDF Plot ----
+    plt.figure()
+    plt.stem(times, pmf)
+    plt.xlabel("Arrival Time")
+    plt.ylabel("Probability")
+    plt.title("PDF of Total Arrival Time")
+    plt.grid(True)
+    plt.show()
+
+    # ---- CDF Plot ----
+    plt.figure()
+    plt.step(times, cdf, where='post')
+    plt.xlabel("Arrival Time")
+    plt.ylabel("Cumulative Probability")
+    plt.title("CDF of Total Arrival Time")
+    plt.grid(True)
+    plt.show()
 
 if __name__ == "__main__":
     print("=== SOTA Deterministic Route Planner ===")
@@ -166,3 +191,5 @@ if __name__ == "__main__":
     sorted_times = sorted(non_zero_times, key=lambda t: let_pmf[t], reverse=True)[:5]
     for t in sorted_times:
         print(f"  - Arriving at t={t}: {let_pmf[t]*100:.2f}%")
+    
+    plot_pdf_cdf(let_pmf)
