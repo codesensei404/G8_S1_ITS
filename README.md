@@ -52,6 +52,7 @@ G8_S1_ITS/
 ├── Code/
 │   ├── Deterministic_Approach/
 │   │   ├── Deterministic_Approach_Milestone_03.py
+│   │   ├── Deterministic_Approach_with_CDF_PDF_Curve.py
 │   │   ├── graph.json
 │   │   └── Random_Data_Generator.py
 │   └── Reference_Code/
@@ -86,16 +87,21 @@ G8_S1_ITS/
 │   ├── S1_G8_ITS_L14_(S_CoT)/
 │   │   ├── Chat_Link/
 │   │   │   ├── S1_G8_Chat_Link_L14_(S_CoT)_AU2440099_Abdulwahab_Shaikh.txt
-│   │   │   └── S1_G8_Chat_Link_L14_(S_CoT)_AU2440127_Yagnik-Trivedi.txt
+│   │   │   ├── S1_G8_Chat_Link_L14_(S_CoT)_AU2440127_Yagnik-Trivedi.txt
+│   │   │   └── S1_G8_Chat_Link_L14_(S_CoT)_AU2440236_Dhruvi_Chavda.txt
 │   │   ├── Chat_PDF/
 │   │   │   ├── S1_G8_ChatPDF_L14_(S_CoT)_AU2440099_Abdulwahab_Shaikh.pdf
-│   │   │   └── S1_G8_ChatPDF_L14_(S_CoT)_AU2440127_Yagnik-Trivedi.pdf
+│   │   │   ├── S1_G8_ChatPDF_L14_(S_CoT)_AU2440127_Yagnik-Trivedi.pdf
+│   │   │   └── S1_G8_ChatPDF_L14_(S_CoT)_AU2440236_Dhruvi_Chavda.pdf
 │   │   ├── Prompt/
 │   │   │   ├── S1_G8_Prompt_L14_(S_CoT)_AU2440099_Abdulwahab_Shaikh.txt
-│   │   │   └── S1_G8_Prompt_L14_(S_CoT)_AU2440127_Yagnik-Trivedi.txt
+│   │   │   ├── S1_G8_Prompt_L14_(S_CoT)_AU2440127_Yagnik-Trivedi.txt
+│   │   │   └── S1_G8_Prompt_L14_(S_CoT)_AU2440236_Dhruvi_Chavda.txt
 │   │   └── Scribe/
 │   │       ├── S1_G8_L14_Scribe__S_CoT__AU2440099_Abdulwahab_Shaikh.pdf
 │   │       ├── S1_G8_L14_Scribe__S_CoT__AU2440099_Abdulwahab_Shaikh.tex
+│   │       ├── S1_G8_L14_Scribe__S_CoT__AU2440236_Dhruvi_Chavda.pdf
+│   │       ├── S1_G8_L14_Scribe__S_CoT_AU2440236_Dhruvi_Chavda.tex
 │   │       ├── S1_G8_L14_Scribe_S_CoT_AU2440127_Yagnik_Trivedi.pdf
 │   │       └── S1_G8_L14_Scribe_S_CoT_AU2440127_Yagnik_Trivedi.tex
 │   ├── S1_G8_ITS_L18_(S_CoT)/
