@@ -44,12 +44,13 @@ The below is the File Structure for the Github repository according to the given
 
 
 
-
 G8_S1_ITS/
 ├── .dist/
 ├── Base Paper/
 │   └── SOTA.pdf
 ├── Code/
+│   ├── CS/
+│   │   └── index.html
 │   ├── Deterministic_Approach/
 │   │   ├── Deterministic_Approach_Milestone_03.py
 │   │   ├── Deterministic_Approach_with_CDF_PDF_Curve.py
@@ -176,4 +177,13 @@ G8_S1_ITS/
 │   │   └── S1_G8_ITS_M2_Scribe.pdf
 │   └── Video Presentation/
 │       └── S1_G8_ITS_SOTA_M2_Video_Link_Google_Drive.txt
+├── Project Milestone 03/
+│   ├── Concept Map/
+│   │   └── Concept_Map_Placeholder.txt
+│   ├── PPT For Video/
+│   │   └── ppt_placeholder.txt
+│   ├── Scribe/
+│   │   └── Scribe_Placeholder.txt
+│   └── Video Presentation/
+│       └── S1_G8_ITS_SOTA_M3_Video_PPT_Link.txt
 └── README.md
