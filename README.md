@@ -28,6 +28,22 @@ The Submission Components:
 2) Video Preparation - Dhruvi Chavda and Abdulwahab Shaikh
 3) Scribe Preparation - Manthangiri Gosai and Yagnik Trivedi
 
+********************************************************************
+********************************************************************
+********************************************************************
+********************************************************************
+********************************************************************
+********************************************************************
+********************************************************************
+********************************************************************
+
+Milestone-03: Due Date 10-March-2026
+The Submission Components:
+
+1) Concept Map and GitHub Initialization - Manthangiri
+2) Video Preparation - Abdulwahab Shaikh and Vruddhi Madam
+3) Scribe Preparation - Dhruvi Chavda and Yagnik Trivedi
+
 The below is the File Structure for the Github repository according to the given instructions.
 
 ********************************************************************
