@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOTA vs Dijkstra: Smooth Routing Simulation</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --dij-color: #ef4444; /* Red */
+            --sota-color: #10b981; /* Green */
+            --border-color: #e5e7eb;
+        }
+        body { font-family: 'Inter', 'Segoe UI', sans-serif; background: var(--bg-color); color: var(--text-main); margin: 0; padding: 20px; }
+        .header { text-align: center; margin-bottom: 25px; }
+        .header h2 { margin: 0; font-size: 1.8rem; color: #111827; }
+        .header p { color: #6b7280; margin-top: 5px; }
+        
+        .controls-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin-bottom: 25px; }
+        .control-group { background: var(--card-bg); padding: 15px 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); display: flex; flex-direction: column; gap: 10px; flex: 1; min-width: 300px; max-width: 500px;}
+        .control-group h3 { margin: 0; font-size: 1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 5px; }
+        
+        .input-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.95rem; }
+        input { padding: 8px 12px; width: 80px; border: 1px solid #d1d5db; border-radius: 6px; outline: none; transition: border-color 0.2s; }
+        input[type="text"] { width: 120px; }
+        input:focus { border-color: #3b82f6; }
+        
+        .btn { padding: 10px 18px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 0.95rem; transition: background 0.2s, transform 0.1s; color: white; }
+        .btn:active { transform: scale(0.98); }
+        .btn-blue { background: #3b82f6; width: 100%; }
+        .btn-blue:hover { background: #2563eb; }
+        .btn-green { background: #10b981; width: 100%; font-size: 1.05rem; }
+        .btn-green:hover { background: #059669; }
+
+        .budget-hint { font-size: 0.85rem; color: #6b7280; font-style: italic; text-align: right; }
+
+        .split-container { display: flex; gap: 20px; flex-wrap: wrap; }
+        .half { flex: 1; min-width: 450px; background: var(--card-bg); padding: 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); display: flex; flex-direction: column; }
+        .half h3 { margin-top: 0; text-align: center; }
+        
+        canvas.map { background: #f8fafc; border: 1px solid var(--border-color); border-radius: 8px; width: 100%; height: 350px; margin-bottom: 15px; }
+        .chart-container { width: 100%; height: 250px; position: relative; }
+        
+        .stats { background: #f3f4f6; padding: 10px; border-radius: 8px; text-align: center; font-weight: 600; font-size: 1rem; margin-bottom: 15px; }
+        .dij-text { color: var(--dij-color); }
+        .sota-text { color: var(--sota-color); }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h2>Intelligent Routing: SOTA vs Dijkstra</h2>
+        <p>Smooth Canvas Animation & Accurate Probability Distributions</p>
+    </div>
+
+    <div class="controls-container">
+        <div class="control-group">
+            <h3>1. Map Settings</h3>
+            <div class="input-row"><label>Total Nodes:</label> <input type="number" id="nodeCount" value="25" min="5" max="60"></div>
+            <div class="input-row"><label>Max Edge Time:</label> <input type="number" id="maxTime" value="6" min="2" max="15"></div>
+            <button class="btn btn-blue" onclick="generateGraph()">Generate Random Map</button>
+        </div>
+
+        <div class="control-group">
+            <h3>2. Route Parameters</h3>
+            <div class="input-row">
+                <label>Source / Dest ID:</label> 
+                <div>
+                    <input type="number" id="source" value="0" min="0" onchange="updateSuggestedBudget()"> ➔ 
+                    <input type="number" id="dest" value="24" min="0" onchange="updateSuggestedBudget()">
+                </div>
+            </div>
+            <div class="input-row">
+                <label>Waypoints (e.g. 5,12):</label> 
+                <input type="text" id="waypoints" placeholder="None" onchange="updateSuggestedBudget()">
+            </div>
+            <div class="input-row">
+                <label>Time Budget (T):</label> 
+                <input type="number" id="budget" value="40" min="1">
+            </div>
+            <div class="budget-hint" id="budgetHint">Expected Time: -- | Suggested Range (±30%): -- to --</div>
+            <button class="btn btn-green" onclick="runSimulation()">▶ Run Algorithms</button>
+        </div>
+    </div>
+
+    <div class="split-container">
+        <div class="half">
+            <h3 class="dij-text">Deterministic (Dijkstra)</h3>
+            <canvas id="dijCanvas" class="map"></canvas>
+            <div id="dijStats" class="stats dij-text">Waiting to run...</div>
+            <div class="chart-container"><canvas id="dijChart"></canvas></div>
+        </div>
+
+        <div class="half">
+            <h3 class="sota-text">Stochastic (SOTA A*)</h3>
+            <canvas id="sotaCanvas" class="map"></canvas>
+            <div id="sotaStats" class="stats sota-text">Waiting to run...</div>
+            <div class="chart-container"><canvas id="sotaChart"></canvas></div>
+        </div>
+    </div>
+
+    <script>
+        // --- Globals ---
+        let nodes = [], edges = [], numNodes = 0;
+        let dijChartInst = null, sotaChartInst = null;
+        let animationFrames = []; // To store requestAnimationFrame IDs for cancellation
+
+        // --- Math Helpers ---
+        function convolve(pmf1, pmf2) {
+            let res = new Array(pmf1.length + pmf2.length - 1).fill(0);
+            for (let i = 0; i < pmf1.length; i++) {
+                for (let j = 0; j < pmf2.length; j++) {
+                    res[i + j] += pmf1[i] * pmf2[j];
+                }
+            }
+            // Normalize slightly to prevent floating point drift over long paths
+            let sum = res.reduce((a, b) => a + b, 0);
+            return res.map(val => val / sum);
+        }
+
+        function generatePMF(maxTime) {
+            let len = Math.floor(Math.random() * maxTime) + 2; 
+            let raw = Array.from({length: len}, () => Math.random());
+            let sum = raw.reduce((a, b) => a + b, 0);
+            return raw.map(v => v / sum);
+        }
+
+        function getExpectedTime(pmf) {
+            return pmf.reduce((sum, prob, time) => sum + (time * prob), 0);
+        }
+
+        // --- Network Generation ---
+        function generateGraph() {
+            numNodes = parseInt(document.getElementById('nodeCount').value);
+            let maxTime = parseInt(document.getElementById('maxTime').value);
+            document.getElementById('dest').value = numNodes - 1; 
+
+            nodes = []; edges = [];
+            
+            // Generate nodes
+            for (let i = 0; i < numNodes; i++) {
+                nodes.push({ id: i, x: 40 + Math.random() * 820, y: 40 + Math.random() * 270 });
+            }
+
+            // Connect nearest neighbors (k=3)
+            for (let i = 0; i < numNodes; i++) {
+                let dists = nodes.map(n => ({ id: n.id, d: Math.hypot(n.x - nodes[i].x, n.y - nodes[i].y) }))
+                                 .filter(n => n.id !== i).sort((a, b) => a.d - b.d);
+                
+                for (let j = 0; j < 3; j++) {
+                    let target = dists[j].id;
+                    if (!edges.some(e => (e.u === i && e.v === target) || (e.u === target && e.v === i))) {
+                        let pmf = generatePMF(maxTime);
+                        let expT = getExpectedTime(pmf);
+                        edges.push({ u: i, v: target, pmf: pmf, expTime: expT });
+                        edges.push({ u: target, v: i, pmf: pmf, expTime: expT }); 
+                    }
+                }
+            }
+            
+            clearOutputs();
+            drawBaseMap('dijCanvas');
+            drawBaseMap('sotaCanvas');
+            updateSuggestedBudget();
+        }
+
+        // --- Core Dijkstra Logic (Used for UI Budget and Paths) ---
+        function runDijkstra(start, goal) {
+            let dist = Array(numNodes).fill(Infinity);
+            let prev = Array(numNodes).fill(null);
+            let pq = [{id: start, cost: 0}];
+            dist[start] = 0;
+
+            while (pq.length > 0) {
+                pq.sort((a, b) => a.cost - b.cost);
+                let curr = pq.shift();
+                if (curr.id === goal) break;
+
+                edges.filter(e => e.u === curr.id).forEach(edge => {
+                    let alt = dist[curr.id] + edge.expTime;
+                    if (alt < dist[edge.v]) {
+                        dist[edge.v] = alt;
+                        prev[edge.v] = curr.id;
+                        pq.push({id: edge.v, cost: alt});
+                    }
+                });
+            }
+
+            let path = [], curr = goal;
+            while (curr !== null) { path.unshift(curr); curr = prev[curr]; }
+            return path[0] === start ? path : null; 
+        }
+
+        // --- Auto-suggest Budget (-30% to +30%) ---
+        function updateSuggestedBudget() {
+            if (nodes.length === 0) return;
+            let src = parseInt(document.getElementById('source').value);
+            let dst = parseInt(document.getElementById('dest').value);
+            let wpStr = document.getElementById('waypoints').value.trim();
+            
+            let seq = [src];
+            if (wpStr) wpStr.split(',').forEach(w => seq.push(parseInt(w.trim())));
+            seq.push(dst);
+
+            let totalExp = 0;
+            for (let i = 0; i < seq.length - 1; i++) {
+                let seg = runDijkstra(seq[i], seq[i+1]);
+                if (!seg) { document.getElementById('budgetHint').innerText = "Path not possible."; return; }
+                for(let j=0; j<seg.length-1; j++) {
+                    totalExp += edges.find(e => e.u === seg[j] && e.v === seg[j+1]).expTime;
+                }
+            }
+
+            totalExp = Math.round(totalExp);
+            let minB = Math.floor(totalExp * 0.7);
+            let maxB = Math.ceil(totalExp * 1.3);
+            
+            document.getElementById('budgetHint').innerHTML = `Expected Time: <b>${totalExp}</b> | Suggested Range (±30%): <b>${minB} to ${maxB}</b>`;
+            // Auto-fill budget if it's wildly out of bounds
+            let currB = parseInt(document.getElementById('budget').value);
+            if(currB < minB * 0.5 || currB > maxB * 2) {
+                document.getElementById('budget').value = Math.round(totalExp * 1.1); // Default to slightly safer than exact expected
+            }
+        }
+
+        // --- SOTA Algorithm ---
+        function runSOTA(start, goal, budget) {
+            let pq = [{id: start, prob: 1.0, pmf: [1.0], path: [start], expTime: 0}];
+            let bestPath = null, bestProb = -1, bestPmf = null;
+            let visited = new Map();
+
+            while (pq.length > 0) {
+                // Sort by prob, adding random noise for variant exploration on equal probs
+                pq.sort((a, b) => (b.prob - a.prob) || (Math.random() - 0.5));
+                let curr = pq.shift();
+
+                if (curr.id === goal) {
+                    if (curr.prob > bestProb) {
+                        bestProb = curr.prob; bestPath = curr.path; bestPmf = curr.pmf;
+                    }
+                    continue; 
+                }
+
+                if (visited.has(curr.id) && visited.get(curr.id) >= curr.prob) continue;
+                visited.set(curr.id, curr.prob);
+
+                edges.filter(e => e.u === curr.id).forEach(edge => {
+                    if (curr.path.includes(edge.v)) return; 
+                    let newPmf = convolve(curr.pmf, edge.pmf);
+                    let maxIdx = Math.min(budget, newPmf.length - 1);
+                    let newProb = newPmf.slice(0, maxIdx + 1).reduce((a, b) => a + b, 0);
+
+                    if (newProb > 0) { 
+                        pq.push({ id: edge.v, prob: newProb, pmf: newPmf, path: [...curr.path, edge.v], expTime: curr.expTime + edge.expTime });
+                    }
+                });
+                if (pq.length > 8000) break; // Infinite loop safety
+            }
+            return bestPath ? {path: bestPath, pmf: bestPmf, prob: bestProb} : null;
+        }
+
+        // --- Calculate Full PMF for a Path Array ---
+        function calculatePathPMF(pathSeq) {
+            let totalPmf = [1.0];
+            for (let i = 0; i < pathSeq.length - 1; i++) {
+                let u = pathSeq[i], v = pathSeq[i+1];
+                let edge = edges.find(e => e.u === u && e.v === v);
+                totalPmf = convolve(totalPmf, edge.pmf);
+            }
+            return totalPmf;
+        }
+
+        // --- Execution ---
+        function runSimulation() {
+            if (nodes.length === 0) { alert("Generate a map first!"); return; }
+            clearOutputs();
+
+            let src = parseInt(document.getElementById('source').value);
+            let dst = parseInt(document.getElementById('dest').value);
+            let budget = parseInt(document.getElementById('budget').value);
+            let wpStr = document.getElementById('waypoints').value.trim();
+            
+            let routeSeq = [src];
+            if (wpStr) wpStr.split(',').forEach(w => routeSeq.push(parseInt(w.trim())));
+            routeSeq.push(dst);
+
+            // Dijkstra Segment
+            let dijFullSeq = [];
+            for (let i = 0; i < routeSeq.length - 1; i++) {
+                let seg = runDijkstra(routeSeq[i], routeSeq[i+1]);
+                if (!seg) { alert(`No path between ${routeSeq[i]} and ${routeSeq[i+1]}`); return; }
+                if (i > 0) seg.shift();
+                dijFullSeq.push(...seg);
+            }
+            let dijPmf = calculatePathPMF(dijFullSeq);
+            let dijProb = dijPmf.slice(0, Math.min(budget + 1, dijPmf.length)).reduce((a,b)=>a+b, 0);
+
+            // SOTA Segment
+            let sotaFullSeq = [];
+            for (let i = 0; i < routeSeq.length - 1; i++) {
+                let sotaSeg = runSOTA(routeSeq[i], routeSeq[i+1], budget); 
+                if (!sotaSeg) { sotaFullSeq = dijFullSeq; break; } // Fallback
+                if (i > 0) sotaSeg.path.shift();
+                sotaFullSeq.push(...sotaSeg.path);
+            }
+            let sotaPmf = calculatePathPMF(sotaFullSeq);
+            let sotaProb = sotaPmf.slice(0, Math.min(budget + 1, sotaPmf.length)).reduce((a,b)=>a+b, 0);
+
+            // UI Updates
+            document.getElementById('dijStats').innerText = `Path: ${dijFullSeq.join('➔')} | P(T≤${budget}) = ${(dijProb*100).toFixed(1)}%`;
+            document.getElementById('sotaStats').innerText = `Path: ${sotaFullSeq.join('➔')} | P(T≤${budget}) = ${(sotaProb*100).toFixed(1)}%`;
+            
+            renderChart('dijChart', dijPmf, budget, '#ef4444', 'Dijkstra');
+            renderChart('sotaChart', sotaPmf, budget, '#10b981', 'SOTA');
+
+            // Trigger Smooth Animations
+            animateSmoothPath('dijCanvas', dijFullSeq, '#ef4444');
+            animateSmoothPath('sotaCanvas', sotaFullSeq, '#10b981');
+        }
+
+        // --- Drawing & Smooth Canvas Animation ---
+        function drawBaseMap(canvasId) {
+            let canvas = document.getElementById(canvasId);
+            canvas.width = 900; canvas.height = 350;
+            let ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw generic edges
+            ctx.strokeStyle = '#e5e7eb'; ctx.lineWidth = 2;
+            edges.forEach(e => {
+                let u = nodes[e.u], v = nodes[e.v];
+                ctx.beginPath(); ctx.moveTo(u.x, u.y); ctx.lineTo(v.x, v.y); ctx.stroke();
+            });
+
+            // Draw generic nodes
+            nodes.forEach(n => {
+                ctx.fillStyle = '#9ca3af';
+                ctx.beginPath(); ctx.arc(n.x, n.y, 9, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = 'white'; ctx.font = '10px Arial'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                ctx.fillText(n.id, n.x, n.y);
+            });
+        }
+
+        function animateSmoothPath(canvasId, pathIds, color) {
+            let canvas = document.getElementById(canvasId);
+            let ctx = canvas.getContext('2d');
+            
+            let currentEdgeIdx = 0;
+            let progress = 0; // 0.0 to 1.0 interpolation factor
+            let animationSpeed = 0.05; // Frames increment per frame draw
+
+            function renderFrame() {
+                drawBaseMap(canvasId); // Redraw base
+                
+                ctx.strokeStyle = color;
+                ctx.lineWidth = 6;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+
+                // Draw fully completed segments of the path
+                ctx.beginPath();
+                ctx.moveTo(nodes[pathIds[0]].x, nodes[pathIds[0]].y);
+                for (let i = 1; i <= currentEdgeIdx; i++) {
+                    ctx.lineTo(nodes[pathIds[i]].x, nodes[pathIds[i]].y);
+                }
+
+                // Draw the actively animating segment
+                if (currentEdgeIdx < pathIds.length - 1) {
+                    let u = nodes[pathIds[currentEdgeIdx]];
+                    let v = nodes[pathIds[currentEdgeIdx + 1]];
+                    
+                    let currX = u.x + (v.x - u.x) * progress;
+                    let currY = u.y + (v.y - u.y) * progress;
+                    
+                    ctx.lineTo(currX, currY);
+                    ctx.stroke();
+
+                    // Advance progress
+                    progress += animationSpeed;
+                    if (progress >= 1.0) {
+                        progress = 0;
+                        currentEdgeIdx++;
+                    }
+                    animationFrames.push(requestAnimationFrame(renderFrame));
+                } else {
+                    // Animation complete
+                    ctx.stroke();
+                    
+                    // Highlight selected nodes
+                    pathIds.forEach(id => {
+                        let n = nodes[id];
+                        ctx.fillStyle = color;
+                        ctx.beginPath(); ctx.arc(n.x, n.y, 11, 0, Math.PI * 2); ctx.fill();
+                        ctx.fillStyle = 'white'; ctx.fillText(n.id, n.x, n.y);
+                    });
+                }
+            }
+            renderFrame();
+        }
+
+        function clearOutputs() {
+            animationFrames.forEach(cancelAnimationFrame);
+            animationFrames = [];
+            document.getElementById('dijStats').innerText = "Waiting to run...";
+            document.getElementById('sotaStats').innerText = "Waiting to run...";
+            if(dijChartInst) dijChartInst.destroy();
+            if(sotaChartInst) sotaChartInst.destroy();
+            drawBaseMap('dijCanvas');
+            drawBaseMap('sotaCanvas');
+        }
+
+        // --- Correct Chart.js Generation ---
+        function renderChart(canvasId, pmf, budget, color, label) {
+            let ctx = document.getElementById(canvasId).getContext('2d');
+            let labels = Array.from({length: pmf.length}, (_, i) => i);
+            
+            // Build Cumulative Distribution Function strictly
+            let cdf = [];
+            pmf.reduce((acc, val) => { let sum = acc + val; cdf.push(sum); return sum; }, 0);
+
+            let config = {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [
+                        { label: `${label} PMF (PDF)`, data: pmf, backgroundColor: color, order: 2, barPercentage: 1.0, categoryPercentage: 0.9 },
+                        // Stepped line is mathematically accurate for discrete probability steps
+                        { label: `${label} CDF`, data: cdf, type: 'line', borderColor: '#3b82f6', fill: false, tension: 0, stepped: 'middle', borderWidth: 2, order: 1 }
+                    ]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    interaction: { mode: 'index', intersect: false },
+                    plugins: {
+                        tooltip: { callbacks: { label: (ctx) => `${ctx.dataset.label}: ${(ctx.raw*100).toFixed(2)}%` } }
+                    },
+                    scales: { 
+                        x: { title: { display: true, text: 'Time Units' } },
+                        y: { beginAtZero: true, max: 1.0, title: { display: true, text: 'Probability' } } 
+                    }
+                }
+            };
+
+            if (canvasId === 'dijChart') dijChartInst = new Chart(ctx, config);
+            else sotaChartInst = new Chart(ctx, config);
+        }
+
+        window.onload = generateGraph;
+    </script>
+</body>
+</html>
